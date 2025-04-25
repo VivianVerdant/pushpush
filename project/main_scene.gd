@@ -19,6 +19,10 @@ func _ready() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(push_button, "disabled", true, intro_time)
 	tween.tween_property(push_button, "disabled", false, 0)
+	
+	var effect = score_effect.instantiate()
+	get_parent().add_child(effect)
+	effect.global_position = Vector3(0.0, 100.0, 0.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

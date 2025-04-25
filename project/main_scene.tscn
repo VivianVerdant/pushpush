@@ -1,35 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://b7iyqkfafqeto"]
+[gd_scene load_steps=16 format=3 uid="uid://b7iyqkfafqeto"]
 
 [ext_resource type="Script" uid="uid://cehdklqcd4lqh" path="res://addons/orbit_camera/orbit_camera.gd" id="1_0f027"]
 [ext_resource type="Script" uid="uid://bbsd0phaujuvp" path="res://main_scene.gd" id="1_2c62f"]
 [ext_resource type="Texture2D" uid="uid://dr2jeisyn78xp" path="res://tex/stone.png" id="2_hq1ik"]
+[ext_resource type="Theme" uid="uid://bsj1ss2khfra2" path="res://theme.tres" id="2_nfk4m"]
 [ext_resource type="Texture2D" uid="uid://cbnj1yu6brfnf" path="res://tex/wood_red.png" id="3_hq1ik"]
 [ext_resource type="Texture2D" uid="uid://cpiywpms3llse" path="res://tex/wood.png" id="4_nfk4m"]
 [ext_resource type="PackedScene" uid="uid://daskw41451os1" path="res://target_puck.tscn" id="6_hq1ik"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hq1ik"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.15, 0, 0.00249996, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfk4m"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.45, 0.45, 0.45, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2c62f"]
 
@@ -77,7 +54,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -91.0
+offset_left = -214.0
+offset_top = -165.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_left = 50
@@ -87,12 +65,29 @@ theme_override_constants/margin_bottom = 50
 
 [node name="push_button" type="Button" parent="GUI/margin_container"]
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 60
-theme_override_styles/disabled = SubResource("StyleBoxFlat_hq1ik")
-theme_override_styles/normal = SubResource("StyleBoxFlat_nfk4m")
+focus_mode = 0
+theme = ExtResource("2_nfk4m")
 disabled = true
 text = "PUSH!"
+
+[node name="margin_container_2" type="MarginContainer" parent="GUI"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="h_box_container" type="HBoxContainer" parent="GUI/margin_container_2"]
+layout_mode = 2
+
+[node name="texture_rect" type="TextureRect" parent="GUI/margin_container_2/h_box_container"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="GUI/margin_container_2/h_box_container"]
+layout_mode = 2
+text = "Click LMB and drag to move camera/pusher"
 
 [node name="world_environment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_d5x1h")
