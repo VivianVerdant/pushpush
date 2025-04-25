@@ -1,0 +1,201 @@
+[gd_scene load_steps=17 format=3 uid="uid://b7iyqkfafqeto"]
+
+[ext_resource type="Script" uid="uid://cehdklqcd4lqh" path="res://addons/orbit_camera/orbit_camera.gd" id="1_0f027"]
+[ext_resource type="Script" uid="uid://bbsd0phaujuvp" path="res://main_scene.gd" id="1_2c62f"]
+[ext_resource type="Texture2D" uid="uid://dr2jeisyn78xp" path="res://tex/stone.png" id="2_hq1ik"]
+[ext_resource type="Texture2D" uid="uid://cbnj1yu6brfnf" path="res://tex/wood_red.png" id="3_hq1ik"]
+[ext_resource type="Texture2D" uid="uid://cpiywpms3llse" path="res://tex/wood.png" id="4_nfk4m"]
+[ext_resource type="PackedScene" uid="uid://daskw41451os1" path="res://target_puck.tscn" id="6_hq1ik"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hq1ik"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.15, 0, 0.00249996, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfk4m"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.45, 0.45, 0.45, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2c62f"]
+
+[sub_resource type="Sky" id="Sky_gyfs4"]
+sky_material = SubResource("ProceduralSkyMaterial_2c62f")
+
+[sub_resource type="Environment" id="Environment_d5x1h"]
+background_mode = 2
+sky = SubResource("Sky_gyfs4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ycvg"]
+albedo_texture = ExtResource("2_hq1ik")
+uv1_triplanar = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hq1ik"]
+radius = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nfk4m"]
+albedo_texture = ExtResource("3_hq1ik")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wr18j"]
+albedo_texture = ExtResource("4_nfk4m")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hq1ik"]
+size = Vector3(50, 5.59875, 50)
+
+[node name="main_scene_root" type="Node3D"]
+script = ExtResource("1_2c62f")
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="margin_container" type="MarginContainer" parent="GUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -91.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="push_button" type="Button" parent="GUI/margin_container"]
+layout_mode = 2
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+theme_override_styles/disabled = SubResource("StyleBoxFlat_hq1ik")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfk4m")
+disabled = true
+text = "PUSH!"
+
+[node name="world_environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d5x1h")
+
+[node name="directional_light_3d" type="DirectionalLight3D" parent="world_environment"]
+transform = Transform3D(0.760223, 0.528803, 0.377396, -0.583711, 0.300957, 0.754126, 0.285204, -0.793594, 0.537463, 0, 7.23313, 0)
+
+[node name="debug_vis_box" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+radius = 3.0
+sides = 32
+material = SubResource("StandardMaterial3D_7ycvg")
+
+[node name="static_body_3d" type="StaticBody3D" parent="debug_vis_box"]
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="debug_vis_box/static_body_3d"]
+shape = SubResource("CylinderShape3D_hq1ik")
+
+[node name="csg_cylinder_3d" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.2901, 0)
+flip_faces = true
+radius = 17.9702
+height = 28.3521
+sides = 32
+material = SubResource("StandardMaterial3D_nfk4m")
+
+[node name="camera_pivot" type="Marker3D" parent="."]
+
+[node name="orbit_camera" type="Camera3D" parent="camera_pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 3.66448, 5.88078)
+current = true
+script = ExtResource("1_0f027")
+SCROLL_SPEED = 50.0
+DEFAULT_DISTANCE = 10.0
+ROTATE_SPEED = 0.5
+ANCHOR_NODE_PATH = NodePath("..")
+metadata/_custom_type_script = "uid://cehdklqcd4lqh"
+
+[node name="label_3d" type="Label3D" parent="camera_pivot/orbit_camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.952, -0.255, -0.722)
+visible = false
+pixel_size = 0.001
+billboard = 1
+double_sided = false
+no_depth_test = true
+fixed_size = true
+text = "asdf"
+horizontal_alignment = 0
+vertical_alignment = 0
+
+[node name="puck_pusher_pivot" type="Marker3D" parent="."]
+
+[node name="puck_pusher" type="Marker3D" parent="puck_pusher_pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 3.75)
+gizmo_extents = 1.0
+
+[node name="csg_cylinder_3d" type="CSGCylinder3D" parent="puck_pusher_pivot/puck_pusher"]
+visible = false
+radius = 0.1
+height = 0.789
+
+[node name="csg_box_3d" type="CSGBox3D" parent="puck_pusher_pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01, 3.5)
+size = Vector3(1.5, 2, 2)
+material = SubResource("StandardMaterial3D_wr18j")
+
+[node name="target_puck" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0192448, 0.11, -1.96388)
+radius = 0.75
+
+[node name="target_puck_2" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382952, 0.11, 1.39278)
+radius = 0.894
+
+[node name="target_puck_3" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.003, 0.11, 0.617921)
+radius = 0.61
+
+[node name="target_puck_4" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16837, 0.11, -1.13515)
+radius = 0.633
+
+[node name="target_puck_5" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31511, 0.11, -0.926892)
+radius = 0.884
+
+[node name="target_puck_6" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15457, 0.11, -0.227049)
+radius = 0.678
+
+[node name="target_puck_7" parent="." instance=ExtResource("6_hq1ik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92149, 0.11, 0.27973)
+radius = 0.944
+
+[node name="kill_plane" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.26329, 0)
+input_ray_pickable = false
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="kill_plane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.595153, 0)
+shape = SubResource("BoxShape3D_hq1ik")
+
+[connection signal="pressed" from="GUI/margin_container/push_button" to="." method="_on_push_button_pressed"]
+[connection signal="camera_rotation_updated" from="camera_pivot/orbit_camera" to="." method="_on_orbit_camera_rotation_updated"]
+[connection signal="body_entered" from="kill_plane" to="." method="_on_kill_plane_body_entered"]

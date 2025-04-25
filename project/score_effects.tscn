@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1rt2480j4rbf"]
+
+[ext_resource type="Script" uid="uid://boe05rro81l56" path="res://score_effects.gd" id="1_pbaxt"]
+[ext_resource type="Texture2D" uid="uid://bo041hy6setfi" path="res://tex/particleWhite_5.png" id="1_rkxwo"]
+
+[sub_resource type="Curve" id="Curve_y6lil"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7phmj"]
+curve = SubResource("Curve_y6lil")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pbaxt"]
+lifetime_randomness = 0.17
+direction = Vector3(0, 1, 0)
+spread = 1.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -4, 0)
+alpha_curve = SubResource("CurveTexture_7phmj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6lil"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_rkxwo")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_7phmj"]
+material = SubResource("StandardMaterial3D_y6lil")
+size = Vector2(0.5, 3.075)
+
+[node name="score_efects" type="Node3D"]
+script = ExtResource("1_pbaxt")
+
+[node name="gpu_particles_3d" type="GPUParticles3D" parent="."]
+emitting = false
+one_shot = true
+visibility_aabb = AABB(-2, -1, -2, 4, 10, 4)
+process_material = SubResource("ParticleProcessMaterial_pbaxt")
+draw_pass_1 = SubResource("QuadMesh_7phmj")
+
+[connection signal="finished" from="gpu_particles_3d" to="." method="_on_gpu_particles_3d_finished"]

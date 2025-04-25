@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg366wb6tjnnh"]
+
+[ext_resource type="Script" uid="uid://kk33dbhgxrnr" path="res://puck.gd" id="1_aluey"]
+[ext_resource type="Texture2D" uid="uid://ctmn7c6642w4" path="res://tex/bg_blue.png" id="2_tert2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwutr"]
+albedo_texture = ExtResource("2_tert2")
+uv1_triplanar = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_d5x1h"]
+height = 0.2
+radius = 0.75
+
+[node name="player_puck" type="RigidBody3D"]
+script = ExtResource("1_aluey")
+radius = 0.75
+current_puck = true
+
+[node name="csg_cylinder_3d" type="CSGCylinder3D" parent="."]
+radius = 0.75
+height = 0.2
+sides = 32
+material = SubResource("StandardMaterial3D_qwutr")
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_d5x1h")
+
+[node name="label_3d" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.684386, 0)
+visible = false
+billboard = 1
+no_depth_test = true
+text = "Current State"

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://daskw41451os1"]
+
+[ext_resource type="Script" uid="uid://dnpvttyh12rfd" path="res://target_puck.gd" id="1_de3f3"]
+[ext_resource type="Texture2D" uid="uid://b1yumlaugdoyk" path="res://tex/bg_red.png" id="2_de3f3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_d5x1h"]
+resource_local_to_scene = true
+height = 0.2
+radius = 0.944
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwutr"]
+albedo_texture = ExtResource("2_de3f3")
+uv1_triplanar = true
+
+[node name="target_puck" type="RigidBody3D"]
+top_level = true
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 6
+script = ExtResource("1_de3f3")
+
+[node name="collision_shape_3d" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_d5x1h")
+
+[node name="csg_cylinder_3d" type="CSGCylinder3D" parent="."]
+radius = 1.0
+height = 0.2
+sides = 32
+material = SubResource("StandardMaterial3D_qwutr")
