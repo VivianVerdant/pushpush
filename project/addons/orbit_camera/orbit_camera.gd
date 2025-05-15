@@ -62,7 +62,7 @@ func _process_transformation(delta: float):
 	
 	# Update distance
 	_distance += _scroll_speed * delta
-	_distance = clamp(_distance, 1.5, 7.0)
+	_distance = clamp(_distance, 1.5, 10.0)
 	_scroll_speed = 0
 	
 	self.set_identity()

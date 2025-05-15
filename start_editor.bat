@@ -1,1 +1,1 @@
-..\Godot_v4.5-dev2_win64.exe project/project.godot
+..\Godot_v4.5-dev4_win64.exe project/project.godot
